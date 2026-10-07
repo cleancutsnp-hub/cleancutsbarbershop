@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>CLEAN CUTS BARBERSHOP — Dhalko, Kathmandu</title>
+<meta name="description" content="Clean Cuts Barbershop — a modern barbershop in Dhalko, Kathmandu. Precision cuts, beard grooming and a clean, comfortable experience. Clean Cuts Clean You." />
+<meta name="theme-color" content="#0a0a0a" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --ink:#0a0a0a;
+  --charcoal:#131313;
+  --charcoal-2:#1a1a1a;
+  --ivory:#f4f0e9;
+  --ivory-2:#e9e3d9;
+  --stone:#a49b8e;
+  --stone-dark:#6d6559;
+  --gold:#c8a86b;
+  --gold-soft:#ddc48f;
+  --line-dark:rgba(244,240,233,.10);
+  --line-light:rgba(10,10,10,.13);
+
+  --serif:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --ease:cubic-bezier(.22,.68,.16,1);
+  --gut:clamp(20px, 5vw, 48px);
+  --sec:clamp(84px, 11vw, 160px);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:120px;
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  background:var(--ink);
+  color:var(--ivory);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:16px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+body.locked{overflow:hidden;height:100vh}
+
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+::selection{background:var(--gold);color:#0a0a0a}
+
+::-webkit-scrollbar{width:9px}
+::-webkit-scrollbar-track{background:#0a0a0a}
+::-webkit-scrollbar-thumb{background:#2c2c2c}
+::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+.container{
+  width:100%;
+  max-width:1280px;
+  margin-inline:auto;
+  padding-inline:var(--gut);
+}
+.container-narrow{
+  width:100%;
+  max-width:860px;
+  margin-inline:auto;
+  padding-inline:var(--gut);
+}
+.section{padding-block:var(--sec);position:relative}
+.bg-ink{background:var(--ink);color:var(--ivory)}
+.bg-charcoal{background:var(--charcoal);color:var(--ivory)}
+.bg-ivory{background:var(--ivory);color:var(--ink)}
+
+.eyebrow{
+  font-size:10.5px;
+  font-weight:500;
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:26px;
+}
+.eyebrow.dim{color:var(--stone)}
+
+.display{
+  font-family:var(--serif);
+  font-weight:400;
+  text-transform:uppercase;
+  line-height:.98;
+  letter-spacing:.005em;
+  font-size:clamp(2.1rem, 6.2vw, 4.4rem);
+}
+.lead{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:300;
+  font-size:clamp(1.35rem, 2.9vw, 2rem);
+  line-height:1.35;
+  letter-spacing:.005em;
+}
+.muted{color:var(--stone)}
+.bg-ivory .muted{color:var(--stone-dark)}
+
+.rule{height:1px;background:var(--line-dark);border:0}
+.bg-ivory .rule{background:var(--line-light)}
+
+/* ============================================================
+   INTRO
+   ============================================================ */
+#intro{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#070707;
+  display:grid;
+  place-items:center;
+  transition:opacity .85s var(--ease), visibility .85s;
+}
+#intro.done{opacity:0;visibility:hidden;pointer-events:none}
+
+.intro-stage{
+  display:grid;
+  place-items:center;
+  width:100%;
+  padding-inline:24px;
+  text-align:center;
+}
+.intro-word{
+  grid-area:1/1;
+  font-family:var(--serif);
+  text-transform:uppercase;
+  font-weight:400;
+  font-size:clamp(1.9rem, 8.5vw, 5.6rem);
+  line-height:1;
+  letter-spacing:.2em;
+  text-indent:.2em;
+  white-space:nowrap;
+  color:var(--ivory);
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .8s var(--ease), transform .8s var(--ease);
+}
+.intro-word:nth-child(2){color:var(--gold)}
+.intro-word.show{opacity:1;transform:translateY(0)}
+.intro-word.hide{opacity:0;transform:translateY(-16px)}
+
+.intro-bar{
+  position:absolute;
+  bottom:clamp(38px, 9vh, 74px);
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  animation:introBar 2.1s var(--ease) forwards;
+}
+@keyframes introBar{
+  0%{width:0;opacity:0}
+  20%{opacity:1}
+  100%{width:min(240px, 46vw);opacity:.5}
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav{
+  position:fixed;
+  inset:0 0 auto 0;
+  z-index:900;
+  padding:22px 0;
+  border-bottom:1px solid transparent;
+  opacity:0;
+  transform:translateY(-10px);
+  transition:opacity .7s var(--ease), transform .7s var(--ease),
+             background .45s ease, backdrop-filter .45s ease,
+             border-color .45s ease, padding .45s ease;
+}
+body.ready .nav{opacity:1;transform:none}
+
+.nav.scrolled{
+  padding:14px 0;
+  background:rgba(10,10,10,.72);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);
+  backdrop-filter:blur(16px) saturate(150%);
+  border-bottom-color:rgba(244,240,233,.08);
+}
+.nav-inner{
+  width:100%;
+  max-width:1280px;
+  margin-inline:auto;
+  padding-inline:var(--gut);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+
+/* LOGO */
+.brand{
+  display:inline-flex;
+  align-items:center;
+  flex-shrink:0;
+  transition:opacity .4s ease, transform .4s var(--ease);
+}
+.brand:hover{opacity:.9;transform:scale(1.02)}
+.brand-logo{
+  height: 84px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 2px 10px rgba(200,168,107,.25));
+  transition: transform .45s var(--ease), filter .45s var(--ease);
+}
+.brand:hover .brand-logo{
+  transform: scale(1.04);
+  filter: drop-shadow(0 4px 16px rgba(200,168,107,.5));
+}
+
+.footer .brand-logo{
+  height: 130px;
+}
+
+.nav-links{display:flex;align-items:center;gap:clamp(14px, 2.2vw, 34px)}
+.nav-links a{
+  position:relative;
+  font-size:10.5px;
+  font-weight:400;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:rgba(244,240,233,.72);
+  padding:6px 0;
+  transition:color .35s ease;
+}
+.nav-links a::after{
+  content:'';
+  position:absolute;
+  left:0;bottom:0;
+  width:100%;height:1px;
+  background:var(--gold);
+  transform:scaleX(0);
+  transform-origin:right;
+  transition:transform .45s var(--ease);
+}
+.nav-links a:hover,
+.nav-links a.active{color:var(--ivory)}
+.nav-links a:hover::after,
+.nav-links a.active::after{transform:scaleX(1);transform-origin:left}
+
+.nav-cta{
+  display:inline-flex;
+  align-items:center;
+  padding:12px 24px;
+  border:1px solid rgba(200,168,107,.55);
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  transition:background .4s var(--ease), color .4s var(--ease), transform .4s var(--ease);
+}
+.nav-cta:hover{background:var(--gold);color:#0a0a0a;transform:translateY(-1px)}
+
+.burger{
+  display:none;
+  width:44px;height:44px;
+  position:relative;
+  margin-right:-8px;
+}
+.burger span{
+  position:absolute;
+  left:12px;
+  width:20px;height:1.4px;
+  background:var(--ivory);
+  transition:transform .45s var(--ease), opacity .3s ease, width .45s var(--ease);
+}
+.burger span:nth-child(1){top:17px}
+.burger span:nth-child(2){top:22px;width:14px}
+.burger span:nth-child(3){top:27px}
+.burger.open span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+
+.mobile-menu{
+  position:fixed;
+  inset:0;
+  z-index:880;
+  background:rgba(8,8,8,.97);
+  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:blur(20px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:110px var(--gut) 60px;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .5s var(--ease), visibility .5s;
+}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mobile-menu a{
+  display:block;
+  font-family:var(--serif);
+  text-transform:uppercase;
+  font-size:clamp(1.7rem, 8vw, 2.4rem);
+  letter-spacing:.08em;
+  padding:14px 0;
+  border-bottom:1px solid var(--line-dark);
+  color:var(--ivory);
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity .5s var(--ease), transform .5s var(--ease), color .3s ease;
+}
+.mobile-menu.open a{opacity:1;transform:none}
+.mobile-menu.open a:nth-child(1){transition-delay:.08s}
+.mobile-menu.open a:nth-child(2){transition-delay:.13s}
+.mobile-menu.open a:nth-child(3){transition-delay:.18s}
+.mobile-menu.open a:nth-child(4){transition-delay:.23s}
+.mobile-menu.open a:nth-child(5){transition-delay:.28s}
+.mobile-menu.open a:nth-child(6){transition-delay:.33s}
+.mobile-menu.open a:nth-child(7){transition-delay:.38s}
+.mobile-menu a:hover{color:var(--gold)}
+.mobile-menu .mm-foot{
+  margin-top:auto;
+  padding-top:34px;
+  font-size:10.5px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--stone);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.7em;
+  padding:17px 34px;
+  font-size:10.5px;
+  font-weight:500;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  border-radius:2px;
+  white-space:nowrap;
+  transition:background .45s var(--ease), color .45s var(--ease),
+             border-color .45s var(--ease), transform .45s var(--ease),
+             box-shadow .45s var(--ease);
+}
+.btn svg{flex-shrink:0}
+.btn-gold{
+  background:var(--gold);
+  color:#0a0a0a;
+  border:1px solid var(--gold);
+}
+.btn-gold:hover{
+  background:var(--gold-soft);
+  border-color:var(--gold-soft);
+  transform:translateY(-2px);
+  box-shadow:0 14px 34px -16px rgba(200,168,107,.85);
+}
+.btn-ghost{
+  border:1px solid rgba(244,240,233,.28);
+  color:var(--ivory);
+}
+.btn-ghost:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+  transform:translateY(-2px);
+}
+.btn-dark-ghost{
+  border:1px solid rgba(10,10,10,.25);
+  color:var(--ink);
+}
+.btn-dark-ghost:hover{
+  border-color:var(--ink);
+  background:var(--ink);
+  color:var(--ivory);
+  transform:translateY(-2px);
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  overflow:hidden;
+  padding:150px 0 110px;
+  isolation:isolate;
+}
+.hero-bg{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center 42%;
+  transform:scale(1.02);
+  animation:heroZoom 32s var(--ease) forwards;
+  z-index:-2;
+  background-color: #1a1a1a;
+}
+@keyframes heroZoom{to{transform:scale(1)}}
+
+.hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:
+    radial-gradient(120% 90% at 50% 40%, rgba(8,8,8,.35) 0%, rgba(8,8,8,.78) 62%, rgba(8,8,8,.95) 100%),
+    linear-gradient(180deg, rgba(8,8,8,.85) 0%, rgba(8,8,8,.55) 35%, rgba(8,8,8,.88) 100%);
+}
+
+.hero-inner{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:1000px;
+  margin-inline:auto;
+  padding-inline:var(--gut);
+}
+
+.hero-loc{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  font-size:10px;
+  letter-spacing:.44em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:34px;
+}
+.hero-loc::before,
+.hero-loc::after{
+  content:'';
+  width:34px;height:1px;
+  background:rgba(200,168,107,.5);
+}
+
+.hero-title{
+  font-family:var(--serif);
+  font-weight:400;
+  text-transform:uppercase;
+  line-height:.88;
+  font-size:clamp(2.9rem, 12.5vw, 8.6rem);
+  letter-spacing:.015em;
+  margin-bottom:20px;
+}
+.hero-title .l2{
+  display:block;
+  font-family:var(--sans);
+  font-weight:400;
+  font-size:clamp(.66rem, 2vw, .95rem);
+  letter-spacing:.66em;
+  text-indent:.66em;
+  color:rgba(244,240,233,.85);
+  margin-top:clamp(14px, 2.4vw, 24px);
+}
+
+.hero-tag{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:300;
+  font-size:clamp(1.25rem, 3.1vw, 2.05rem);
+  color:var(--gold-soft);
+  margin-bottom:28px;
+}
+
+.hero-sub{
+  max-width:520px;
+  margin:0 auto 44px;
+  font-size:clamp(.92rem, 1.6vw, 1rem);
+  line-height:1.9;
+  color:rgba(244,240,233,.68);
+  font-weight:300;
+}
+
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  justify-content:center;
+}
+
+.hero-scroll{
+  position:absolute;
+  left:50%;
+  bottom:34px;
+  transform:translateX(-50%);
+  z-index:3;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  font-size:9px;
+  letter-spacing:.4em;
+  text-transform:uppercase;
+  color:rgba(244,240,233,.45);
+}
+.hero-scroll i{
+  display:block;
+  width:1px;height:52px;
+  background:linear-gradient(180deg, rgba(200,168,107,.9), transparent);
+  animation:scrollPulse 2.4s ease-in-out infinite;
+  transform-origin:top;
+}
+@keyframes scrollPulse{
+  0%,100%{transform:scaleY(.35);opacity:.4}
+  50%{transform:scaleY(1);opacity:1}
+}
+
+.hero [data-hero]{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity 1.1s var(--ease), transform 1.1s var(--ease);
+  transition-delay:var(--hd, 0s);
+}
+body.ready .hero [data-hero]{opacity:1;transform:none}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-copy{text-align:center}
+.about-copy .display{margin-bottom:26px}
+.about-copy .lead{color:var(--stone-dark);margin-bottom:26px}
+.about-copy p.body{
+  max-width:60ch;
+  margin-inline:auto;
+  color:var(--stone-dark);
+  font-size:15px;
+  line-height:2;
+}
+
+.about-stats{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:clamp(26px, 5vw, 60px);
+  margin-top:50px;
+  padding-top:38px;
+  border-top:1px solid var(--line-light);
+  max-width:760px;
+  margin-inline:auto;
+}
+.about-stats div{text-align:center}
+.about-stats div span{
+  display:block;
+  font-family:var(--serif);
+  font-size:1.45rem;
+  letter-spacing:.04em;
+  color:var(--ink);
+  margin-bottom:4px;
+}
+.about-stats div small{
+  font-size:9.5px;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--stone-dark);
+}
+
+/* ============================================================
+   STARTED FROM
+   ============================================================ */
+.started{
+  overflow:hidden;
+  position:relative;
+}
+.started::after{
+  content:'';
+  position:absolute;
+  right:-14%;
+  top:50%;
+  transform:translateY(-50%);
+  width:min(680px, 62vw);
+  aspect-ratio:1;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(200,168,107,.09) 0%, transparent 68%);
+  pointer-events:none;
+}
+.started-grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:clamp(36px, 7vw, 90px);
+  align-items:end;
+  position:relative;
+  z-index:2;
+}
+.started-year{
+  font-family:var(--serif);
+  font-weight:400;
+  text-transform:uppercase;
+  line-height:.92;
+  font-size:clamp(2.1rem, 8.6vw, 6.2rem);
+  letter-spacing:.01em;
+  color:var(--ivory);
+  margin-bottom:8px;
+}
+.started-year em{
+  font-style:normal;
+  color:var(--gold);
+}
+.started-sub{
+  font-size:10.5px;
+  letter-spacing:.4em;
+  text-transform:uppercase;
+  color:var(--stone);
+}
+.started-copy p{
+  font-size:15px;
+  line-height:2;
+  color:rgba(244,240,233,.68);
+  max-width:44ch;
+}
+.started-copy .rule{margin:26px 0}
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+.services-head{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(24px, 5vw, 70px);
+  align-items:end;
+  margin-bottom:clamp(46px, 6vw, 78px);
+}
+.services-head .lead{color:var(--stone-dark);max-width:24ch}
+
+.service-list{border-top:1px solid var(--line-light)}
+.service{
+  display:grid;
+  grid-template-columns:78px minmax(200px, 1fr) 1.15fr;
+  gap:clamp(14px, 3vw, 42px);
+  align-items:baseline;
+  padding:30px 20px;
+  border-bottom:1px solid var(--line-light);
+  position:relative;
+  transition:background .55s var(--ease), padding-left .55s var(--ease);
+}
+.service::after{
+  content:'';
+  position:absolute;
+  left:0;top:0;
+  width:2px;height:100%;
+  background:var(--gold);
+  transform:scaleY(0);
+  transform-origin:bottom;
+  transition:transform .55s var(--ease);
+}
+.service:hover{background:rgba(200,168,107,.055);padding-left:34px}
+.service:hover::after{transform:scaleY(1);transform-origin:top}
+
+.s-num{
+  font-size:10.5px;
+  letter-spacing:.28em;
+  color:var(--gold);
+  font-variant-numeric:tabular-nums;
+}
+.s-name{
+  font-family:var(--serif);
+  font-weight:500;
+  text-transform:uppercase;
+  font-size:clamp(1.2rem, 2.3vw, 1.7rem);
+  letter-spacing:.07em;
+  line-height:1.15;
+  color:var(--ink);
+}
+.s-desc{
+  font-size:14.5px;
+  line-height:1.75;
+  color:var(--stone-dark);
+  max-width:52ch;
+}
+
+/* ============================================================
+   REVIEWS
+   ============================================================ */
+.reviews{position:relative;overflow:hidden}
+.reviews::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(60% 60% at 50% 0%, rgba(200,168,107,.08), transparent 70%);
+  pointer-events:none;
+}
+.reviews-inner{position:relative;z-index:2;max-width:720px;margin-inline:auto;text-align:center}
+.reviews .display{margin-bottom:22px}
+.reviews .lead{color:var(--gold-soft);margin-bottom:10px}
+
+.google-mark{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-size:10px;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--stone);
+  margin-bottom:30px;
+}
+.google-mark svg{width:15px;height:15px}
+
+.review-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:clamp(20px, 3vw, 32px);
+  margin-top:clamp(40px, 5vw, 60px);
+  text-align:left;
+  max-width:1100px;
+  margin-inline:auto;
+  position:relative;
+  z-index:2;
+}
+.review-card{
+  background:rgba(244,240,233,.03);
+  border:1px solid rgba(244,240,233,.08);
+  padding:clamp(26px, 3vw, 38px);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  transition:background .55s var(--ease), border-color .55s var(--ease), transform .55s var(--ease);
+}
+.review-card:hover{
+  background:rgba(244,240,233,.05);
+  border-color:rgba(200,168,107,.35);
+  transform:translateY(-3px);
+}
+.review-card .quote-mark{
+  font-family:var(--serif);
+  font-size:52px;
+  line-height:.6;
+  color:var(--gold);
+  opacity:.7;
+}
+.review-card .review-stars{
+  display:flex;
+  gap:4px;
+}
+.review-card .review-stars svg{
+  width:14px;height:14px;
+  color:var(--gold);
+}
+.review-card p{
+  font-size:14.5px;
+  line-height:1.85;
+  color:rgba(244,240,233,.78);
+  flex:1;
+  font-weight:300;
+}
+.review-card .reviewer{
+  font-size:10.5px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--gold);
+  padding-top:16px;
+  border-top:1px solid rgba(244,240,233,.08);
+}
+
+.reviews-cta{
+  margin-top:clamp(48px, 6vw, 70px);
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+
+/* ============================================================
+   LOCATION
+   ============================================================ */
+.location-grid{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:clamp(38px, 6vw, 84px);
+  align-items:center;
+}
+.loc-copy .display{margin-bottom:18px}
+.loc-area{
+  font-size:11px;
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:26px;
+}
+.loc-lines{
+  font-size:15px;
+  line-height:2;
+  color:var(--stone-dark);
+  margin-bottom:38px;
+}
+.loc-lines strong{font-weight:500;color:var(--ink)}
+
+.map-frame{
+  position:relative;
+  border:1px solid var(--line-light);
+  overflow:hidden;
+  aspect-ratio:16/12;
+  background:var(--ivory-2);
+}
+.map-frame iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  filter:none;
+  transition:filter .8s var(--ease);
+}
+.map-frame:hover iframe{filter:none}
+.map-pin{
+  position:absolute;
+  left:22px;bottom:22px;
+  background:rgba(10,10,10,.9);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  color:var(--ivory);
+  padding:12px 18px;
+  font-size:9.5px;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  pointer-events:none;
+}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact{text-align:center}
+.contact .display{margin-bottom:clamp(38px, 6vw, 62px)}
+.contact-links{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:1px;
+  background:var(--line-dark);
+  border:1px solid var(--line-dark);
+  max-width:920px;
+  margin-inline:auto;
+}
+.contact-link{
+  background:var(--ink);
+  padding:clamp(34px, 5vw, 56px) clamp(20px, 4vw, 40px);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  transition:background .55s var(--ease);
+}
+.contact-link:hover{background:var(--charcoal-2)}
+.contact-link small{
+  font-size:9.5px;
+  letter-spacing:.4em;
+  text-transform:uppercase;
+  color:var(--stone);
+}
+.contact-link span{
+  font-family:var(--serif);
+  font-size:clamp(1.15rem, 3vw, 1.9rem);
+  letter-spacing:.03em;
+  color:var(--ivory);
+  transition:color .45s var(--ease);
+  word-break:break-word;
+}
+.contact-link:hover span{color:var(--gold)}
+
+/* ============================================================
+   INSTAGRAM CTA
+   ============================================================ */
+.instagram-cta{text-align:center}
+.instagram-cta .display{margin-bottom:20px}
+.ig-handle{
+  display:inline-block;
+  font-size:12px;
+  letter-spacing:.4em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:36px;
+}
+.ig-icon-wrap{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:76px;
+  height:76px;
+  border:1px solid rgba(200,168,107,.4);
+  border-radius:50%;
+  color:var(--gold);
+  margin-bottom:34px;
+}
+.ig-icon-wrap svg{width:30px;height:30px}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{
+  background:#060606;
+  border-top:1px solid var(--line-dark);
+  padding:clamp(64px, 8vw, 100px) 0 0;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:clamp(38px, 6vw, 80px);
+  padding-bottom:clamp(52px, 7vw, 82px);
+}
+.footer-loc{
+  font-size:11px;
+  letter-spacing:.36em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin:26px 0 18px;
+}
+.footer-tag{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.35rem;
+  color:rgba(244,240,233,.6);
+}
+.footer h4{
+  font-size:9.5px;
+  font-weight:500;
+  letter-spacing:.4em;
+  text-transform:uppercase;
+  color:var(--stone);
+  margin-bottom:22px;
+}
+.footer ul{list-style:none;display:flex;flex-direction:column;gap:13px}
+.footer ul a,
+.footer ul span{
+  font-size:14px;
+  color:rgba(244,240,233,.75);
+  transition:color .4s var(--ease), padding-left .4s var(--ease);
+}
+.footer ul a{display:inline-block}
+.footer ul a:hover{color:var(--gold);padding-left:6px}
+
+.footer-bottom{
+  border-top:1px solid var(--line-dark);
+  padding:26px 0 34px;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.footer-bottom p{
+  font-size:9.5px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:rgba(244,240,233,.38);
+}
+
+/* Designer credit — enlarged */
+.footer-bottom .designer-credit{
+  font-size:12px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:rgba(244,240,233,.38);
+}
+.designer-credit button{
+  color:var(--gold);
+  font:inherit;
+  letter-spacing:inherit;
+  text-transform:inherit;
+  padding:0;
+  border-bottom:1px solid transparent;
+  transition:color .35s var(--ease), border-color .35s var(--ease);
+}
+.designer-credit button:hover,
+.designer-credit button:focus-visible{
+  color:var(--gold-soft);
+  border-bottom-color:var(--gold-soft);
+  outline:none;
+}
+
+/* ============================================================
+   DESIGNER MODAL
+   ============================================================ */
+.designer-modal{
+  position:fixed;
+  inset:0;
+  z-index:9500;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  background:rgba(4,4,4,.82);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  backdrop-filter:blur(14px) saturate(140%);
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .5s var(--ease), visibility .5s;
+}
+.designer-modal.open{opacity:1;visibility:visible}
+
+.designer-card{
+  position:relative;
+  width:100%;
+  max-width:440px;
+  background:linear-gradient(180deg, #131313 0%, #0c0c0c 100%);
+  border:1px solid rgba(200,168,107,.28);
+  padding:clamp(32px, 5vw, 48px) clamp(24px, 4vw, 40px);
+  text-align:center;
+  transform:translateY(18px) scale(.98);
+  transition:transform .55s var(--ease);
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.9),
+             0 0 0 1px rgba(200,168,107,.06);
+}
+.designer-modal.open .designer-card{transform:none}
+
+.designer-card::before{
+  content:'';
+  position:absolute;
+  inset:8px;
+  border:1px solid rgba(200,168,107,.12);
+  pointer-events:none;
+}
+
+.designer-close{
+  position:absolute;
+  top:12px;right:12px;
+  width:40px;height:40px;
+  display:grid;
+  place-items:center;
+  color:var(--stone);
+  transition:color .35s var(--ease), transform .35s var(--ease);
+}
+.designer-close:hover{color:var(--gold);transform:rotate(90deg)}
+.designer-close svg{width:16px;height:16px}
+
+.designer-eyebrow{
+  font-size:9.5px;
+  font-weight:500;
+  letter-spacing:.44em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:18px;
+}
+.designer-name{
+  font-family:var(--serif);
+  font-weight:400;
+  text-transform:uppercase;
+  line-height:1;
+  font-size:clamp(1.7rem, 6vw, 2.4rem);
+  letter-spacing:.06em;
+  color:var(--ivory);
+  margin-bottom:10px;
+}
+.designer-role{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:300;
+  font-size:1.1rem;
+  color:var(--gold-soft);
+  margin-bottom:30px;
+}
+.designer-divider{
+  width:44px;
+  height:1px;
+  background:rgba(200,168,107,.5);
+  margin:0 auto 30px;
+}
+.designer-contacts{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  text-align:left;
+}
+.designer-contact{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:16px 18px;
+  background:rgba(244,240,233,.03);
+  border:1px solid rgba(244,240,233,.08);
+  transition:background .45s var(--ease), border-color .45s var(--ease), transform .45s var(--ease);
+}
+.designer-contact:hover{
+  background:rgba(200,168,107,.07);
+  border-color:rgba(200,168,107,.4);
+  transform:translateY(-2px);
+}
+.designer-contact svg{
+  width:18px;height:18px;
+  flex-shrink:0;
+  color:var(--gold);
+}
+.designer-contact small{
+  display:block;
+  font-size:9px;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--stone);
+  margin-bottom:2px;
+}
+.designer-contact span{
+  font-size:14px;
+  letter-spacing:.02em;
+  color:var(--ivory);
+  word-break:break-word;
+}
+.designer-foot{
+  margin-top:30px;
+  font-size:9px;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:rgba(244,240,233,.28);
+}
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+[data-reveal]{
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity 1s var(--ease), transform 1s var(--ease);
+  transition-delay:var(--d, 0s);
+  will-change:opacity, transform;
+}
+[data-reveal].in{opacity:1;transform:none}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px){
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .burger{display:block}
+  .started-grid,
+  .services-head,
+  .location-grid{grid-template-columns:1fr}
+  .services-head{gap:20px}
+  .services-head .lead{max-width:none}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-grid > div:first-child{grid-column:1 / -1}
+}
+
+@media (max-width: 900px){
+  .review-grid{grid-template-columns:1fr;max-width:640px}
+}
+
+@media (max-width: 720px){
+  .hero{padding:140px 0 96px}
+  .hero-loc{letter-spacing:.3em;font-size:9px;margin-bottom:26px}
+  .hero-loc::before,.hero-loc::after{width:20px}
+  .hero-sub{margin-bottom:36px}
+  .hero-actions{flex-direction:column;align-items:stretch;gap:12px}
+  .hero-actions .btn{width:100%}
+  .hero-scroll{display:none}
+
+  .service{
+    grid-template-columns:44px 1fr;
+    gap:8px 14px;
+    padding:24px 6px;
+  }
+  .service:hover{padding-left:14px}
+  .s-desc{grid-column:2;margin-top:6px;font-size:14px}
+
+  .contact-links{grid-template-columns:1fr}
+
+  .footer-grid{grid-template-columns:1fr;gap:40px}
+  .footer-bottom{flex-direction:column;align-items:flex-start;text-align:left}
+
+  .brand-logo { height: 62px; }
+  .footer .brand-logo { height: 100px; }
+}
+
+@media (max-width: 420px){
+  .map-pin{padding:10px 14px;font-size:8.5px}
+  .brand-logo { height: 54px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  html{scroll-behavior:auto}
+  [data-reveal]{opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-stage">
+    <div class="intro-word" id="iw1">CLEAN CUTS</div>
+    <div class="intro-word" id="iw2">CLEAN YOU</div>
+  </div>
+  <div class="intro-bar"></div>
+</div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#home" class="brand" aria-label="Clean Cuts Barbershop — home">
+      <img src="https://i.imgur.com/g0H0WfF.png" alt="Clean Cuts Barbershop" class="brand-logo">
+    </a>
+
+    <nav class="nav-links" id="navLinks" aria-label="Primary">
+      <a href="#home" class="active">Home</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#find-us">Find Us</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <a href="#find-us" class="nav-cta">Visit Us</a>
+
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+  <a href="#home">Home</a>
+  <a href="#services">Services</a>
+  <a href="#about">About</a>
+  <a href="#reviews">Reviews</a>
+  <a href="#find-us">Find Us</a>
+  <a href="#contact">Contact</a>
+  <a href="https://www.instagram.com/cleancuts.np" target="_blank" rel="noopener">Instagram</a>
+  <div class="mm-foot">Dhalko · Kathmandu</div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg" id="heroBg"></div>
+
+    <div class="hero-inner">
+      <p class="hero-loc" data-hero style="--hd:.05s">Dhalko · Kathmandu</p>
+
+      <h1 class="hero-title" data-hero style="--hd:.15s">
+        Clean Cuts
+        <span class="l2">Barbershop</span>
+      </h1>
+
+      <p class="hero-tag" data-hero style="--hd:.28s">Clean Cuts Clean You</p>
+
+      <p class="hero-sub" data-hero style="--hd:.4s">
+        A clean cut. A fresh feel.<br>
+        Your everyday confidence starts here.
+      </p>
+
+      <div class="hero-actions" data-hero style="--hd:.52s">
+        <a href="tel:9862111722" class="btn btn-gold">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          Call Us
+        </a>
+        <a href="#find-us" class="btn btn-ghost">Get Directions</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <i></i>
+      Scroll
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section bg-ivory" id="about">
+    <div class="container-narrow about-copy">
+      <p class="eyebrow" data-reveal>The Clean Cuts Experience</p>
+      <h2 class="display" data-reveal style="--d:.06s">Good hair.<br>Good energy.</h2>
+      <p class="lead" data-reveal style="--d:.12s">A modern barbershop built around detail.</p>
+      <p class="body" data-reveal style="--d:.18s">
+        Clean Cuts is a modern barbershop focused on quality grooming, attention to detail
+        and a comfortable experience for every customer who sits in the chair.
+      </p>
+
+      <div class="about-stats" data-reveal style="--d:.24s">
+        <div>
+          <span>Precision</span>
+          <small>Every Cut</small>
+        </div>
+        <div>
+          <span>Detail</span>
+          <small>Every Finish</small>
+        </div>
+        <div>
+          <span>Comfort</span>
+          <small>Every Visit</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STARTED FROM -->
+  <section class="section bg-charcoal started" id="started">
+    <div class="container started-grid">
+      <div>
+        <p class="eyebrow" data-reveal>Started From</p>
+        <h2 class="started-year" data-reveal style="--d:.06s">
+          <em>2023</em>
+        </h2>
+        <p class="started-sub" data-reveal style="--d:.12s">Dhalko · Kathmandu</p>
+      </div>
+
+      <div class="started-copy">
+        <hr class="rule" data-reveal style="--d:.14s">
+        <p data-reveal style="--d:.2s">
+          What began as a simple idea — a clean chair, a sharp cut, a good conversation —
+          grew into Clean Cuts. Our goal has always been the same: to bring a modern
+          grooming experience to Kathmandu, where quality and consistency come first.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section bg-ivory" id="services">
+    <div class="container">
+      <div class="services-head">
+        <div>
+          <p class="eyebrow" data-reveal>Services</p>
+          <h2 class="display" data-reveal style="--d:.06s">The Menu</h2>
+        </div>
+        <p class="lead" data-reveal style="--d:.12s">Precision, style &amp; attention to detail.</p>
+      </div>
+
+      <div class="service-list">
+        <article class="service" data-reveal style="--d:.02s">
+          <span class="s-num">01</span>
+          <h3 class="s-name">Haircut</h3>
+          <p class="s-desc">Classic and modern cuts tailored to your style.</p>
+        </article>
+        <article class="service" data-reveal style="--d:.06s">
+          <span class="s-num">02</span>
+          <h3 class="s-name">Haircut + Beard</h3>
+          <p class="s-desc">A complete grooming session for a sharp finish.</p>
+        </article>
+        <article class="service" data-reveal style="--d:.1s">
+          <span class="s-num">03</span>
+          <h3 class="s-name">Beard Trim</h3>
+          <p class="s-desc">Clean shaping and detailed beard grooming.</p>
+        </article>
+        <article class="service" data-reveal style="--d:.14s">
+          <span class="s-num">04</span>
+          <h3 class="s-name">Beard Styling</h3>
+          <p class="s-desc">Defined, balanced and professionally styled.</p>
+        </article>
+        <article class="service" data-reveal style="--d:.18s">
+          <span class="s-num">05</span>
+          <h3 class="s-name">Kids Haircut</h3>
+          <p class="s-desc">Clean, comfortable grooming for younger clients.</p>
+        </article>
+        <article class="service" data-reveal style="--d:.22s">
+          <span class="s-num">06</span>
+          <h3 class="s-name">Hair Wash &amp; Style</h3>
+          <p class="s-desc">A refreshing wash followed by professional styling.</p>
+        </article>
+        <article class="service" data-reveal style="--d:.26s">
+          <span class="s-num">07</span>
+          <h3 class="s-name">Custom Grooming</h3>
+          <p class="s-desc">Personalized grooming based on your preferred look.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section bg-ink reviews" id="reviews">
+    <div class="container">
+
+      <div class="reviews-inner">
+        <p class="eyebrow" data-reveal>Google Reviews</p>
+        <h2 class="display" data-reveal style="--d:.06s">See what our<br>clients have to say.</h2>
+        <p class="lead" data-reveal style="--d:.12s">Honest words from the chair.</p>
+      </div>
+
+      <div class="review-grid">
+
+        <!-- Rafael Arias -->
+        <article class="review-card" data-reveal style="--d:.05s">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <div class="review-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+          </div>
+          <p>Clean Cuts in Kathmandu, Nepal provided an excellent fade haircut/hairwash within the setting of a clean and professional atmosphere! The barbers helped me to pick out a befitting style. I left feeling and looking more confident. Will definitely be returning when I am back in town!</p>
+          <span class="reviewer">— Rafael Arias</span>
+        </article>
+
+        <!-- Charchit Piya -->
+        <article class="review-card" data-reveal style="--d:.12s">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <div class="review-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+          </div>
+          <p>The ambiance is modern yet inviting, and the staff is friendly and skilled. My haircut was precisely what I wanted, and the attention to detail was impressive. Overall, a very good experience that will keep me coming back.</p>
+          <span class="reviewer">— Charchit Piya</span>
+        </article>
+
+        <!-- Stojan Tomov -->
+        <article class="review-card" data-reveal style="--d:.18s">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <div class="review-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+          </div>
+          <p>Excellent barber, unbeatable value for money. It's worth the 10-minute walk from Thamel. Thank you so much for the haircut, dhanyaabad bhai.</p>
+          <span class="reviewer">— Stojan Tomov</span>
+        </article>
+
+        <!-- Caleb Handley -->
+        <article class="review-card" data-reveal style="--d:.24s">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <div class="review-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.5L12 17.5l-5.8 3.05 1.1-6.5-4.7-4.6 6.5-.95z"/></svg>
+          </div>
+          <p>Exactly what I asked for. Fresh fade and a wash for a very affordable price. Will definitely come back next time I'm in Kathmandu!</p>
+          <span class="reviewer">— Caleb Handley</span>
+        </article>
+
+      </div>
+
+      <div class="reviews-cta">
+        <div class="google-mark" data-reveal>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+            <path d="M21.6 12.2c0-.7-.06-1.35-.18-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.75 3-4.3 3-7.3z"/>
+            <path d="M12 22c2.7 0 4.95-.9 6.6-2.4l-3.2-2.5c-.9.6-2.05.95-3.4.95-2.6 0-4.8-1.75-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z"/>
+            <path d="M6.4 13.95a6 6 0 0 1 0-3.85V7.5H3.1a10 10 0 0 0 0 9l3.3-2.55z"/>
+            <path d="M12 6c1.47 0 2.8.5 3.83 1.5l2.85-2.85A10 10 0 0 0 3.1 7.5l3.3 2.6C7.2 7.75 9.4 6 12 6z"/>
+          </svg>
+          Google
+        </div>
+        <div data-reveal style="--d:.08s">
+          <a href="https://maps.app.goo.gl/CBMHkpDtTWNyAKS79"
+             target="_blank" rel="noopener" class="btn btn-gold">View All Google Reviews ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="section bg-ivory" id="find-us">
+    <div class="container location-grid">
+      <div class="loc-copy">
+        <p class="eyebrow" data-reveal>Location</p>
+        <h2 class="display" data-reveal style="--d:.06s">Find Us</h2>
+        <p class="loc-area" data-reveal style="--d:.1s">Dhalko · Kathmandu</p>
+
+        <p class="loc-lines" data-reveal style="--d:.14s">
+          <strong>Clean Cuts Barbershop</strong><br>
+          Dhalko, Kathmandu<br>
+          Nepal
+        </p>
+
+        <div data-reveal style="--d:.2s">
+          <a href="https://maps.app.goo.gl/CBMHkpDtTWNyAKS79"
+             target="_blank" rel="noopener" class="btn btn-dark-ghost">Get Directions ↗</a>
+        </div>
+      </div>
+
+      <div class="map-frame" data-reveal style="--d:.12s">
+        <iframe
+          src="https://www.google.com/maps?q=Clean+Cuts,+Dhalko,+Kathmandu,+Nepal&z=16&output=embed"
+          title="Map showing Clean Cuts Barbershop in Dhalko, Kathmandu"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map-pin">Dhalko · Kathmandu</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section bg-ink contact" id="contact">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Contact</p>
+      <h2 class="display" data-reveal style="--d:.06s">Let's get you clean.</h2>
+
+      <div class="contact-links" data-reveal style="--d:.14s">
+        <a href="tel:9862111722" class="contact-link">
+          <small>Phone</small>
+          <span>9862111722</span>
+        </a>
+        <a href="mailto:cleancuts.np@gmail.com" class="contact-link">
+          <small>Email</small>
+          <span>cleancuts.np@gmail.com</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM CTA -->
+  <section class="section bg-ivory instagram-cta" id="instagram">
+    <div class="container-narrow">
+      <p class="eyebrow" data-reveal>Instagram</p>
+      <h2 class="display" data-reveal style="--d:.06s">Follow the cuts</h2>
+      <p class="ig-handle" data-reveal style="--d:.1s">@cleancuts.np</p>
+
+      <div data-reveal style="--d:.14s">
+        <span class="ig-icon-wrap" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+            <rect x="3" y="3" width="18" height="18" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+      </div>
+
+      <div data-reveal style="--d:.2s">
+        <a href="https://www.instagram.com/cleancuts.np"
+           target="_blank" rel="noopener" class="btn btn-dark-ghost">Follow on Instagram ↗</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#home" class="brand">
+          <img src="https://i.imgur.com/g0H0WfF.png" alt="Clean Cuts Barbershop" class="brand-logo">
+        </a>
+        <p class="footer-loc">Dhalko · Kathmandu</p>
+        <p class="footer-tag">Clean Cuts Clean You</p>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:9862111722">9862111722</a></li>
+          <li><a href="mailto:cleancuts.np@gmail.com">cleancuts.np@gmail.com</a></li>
+          <li><a href="https://www.instagram.com/cleancuts.np" target="_blank" rel="noopener">@cleancuts.np</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="https://maps.app.goo.gl/CBMHkpDtTWNyAKS79" target="_blank" rel="noopener">Google Reviews</a></li>
+          <li><a href="https://maps.app.goo.gl/CBMHkpDtTWNyAKS79" target="_blank" rel="noopener">Directions</a></li>
+          <li><a href="https://www.instagram.com/cleancuts.np" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Clean Cuts Barbershop. All rights reserved.</p>
+      <p class="designer-credit">
+        Designed by
+        <button type="button" id="designerBtn" aria-haspopup="dialog" aria-controls="designerModal">
+          Pramik Maharjan
+        </button>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- DESIGNER MODAL -->
+<div class="designer-modal" id="designerModal" role="dialog" aria-modal="true" aria-labelledby="designerName" aria-hidden="true">
+  <div class="designer-card">
+    <button class="designer-close" id="designerClose" aria-label="Close designer contact details">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+    </button>
+
+    <p class="designer-eyebrow">Designed &amp; Developed By</p>
+    <h3 class="designer-name" id="designerName">Pramik Maharjan</h3>
+    <p class="designer-role">Web Designer &amp; Developer</p>
+    <div class="designer-divider"></div>
+
+    <div class="designer-contacts">
+      <a href="tel:9803812716" class="designer-contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <span>
+          <small>Phone</small>
+          9803812716
+        </span>
+      </a>
+
+      <a href="mailto:pramikmaharjan51@gmail.com" class="designer-contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2.5" y="4.5" width="19" height="15" rx="2"/>
+          <path d="M3 6l9 7 9-7"/>
+        </svg>
+        <span>
+          <small>Email</small>
+          pramikmaharjan51@gmail.com
+        </span>
+      </a>
+    </div>
+
+    <p class="designer-foot">Tap to call or email</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var heroBg = document.getElementById('heroBg');
+  if (heroBg) {
+    heroBg.style.backgroundImage = 'url("https://i.imgur.com/m15g3lk.jpeg")';
+  }
+
+  var body      = document.body;
+  var intro     = document.getElementById('intro');
+  var iw1       = document.getElementById('iw1');
+  var iw2       = document.getElementById('iw2');
+  var nav       = document.getElementById('nav');
+  var burger    = document.getElementById('burger');
+  var mobileNav = document.getElementById('mobileMenu');
+  var reduce    = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Designer modal ---------- */
+  var designerBtn   = document.getElementById('designerBtn');
+  var designerModal = document.getElementById('designerModal');
+  var designerClose = document.getElementById('designerClose');
+
+  function openDesigner() {
+    designerModal.classList.add('open');
+    designerModal.setAttribute('aria-hidden', 'false');
+    body.classList.add('locked');
+    designerClose.focus();
+  }
+  function closeDesigner() {
+    designerModal.classList.remove('open');
+    designerModal.setAttribute('aria-hidden', 'true');
+    body.classList.remove('locked');
+    if (designerBtn) designerBtn.focus();
+  }
+
+  if (designerBtn && designerModal) {
+    designerBtn.addEventListener('click', openDesigner);
+    designerClose.addEventListener('click', closeDesigner);
+    designerModal.addEventListener('click', function (e) {
+      if (e.target === designerModal) closeDesigner();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && designerModal.classList.contains('open')) closeDesigner();
+    });
+  }
+
+  /* ---------- Intro ---------- */
+  function endIntro() {
+    if (intro && !intro.classList.contains('done')) {
+      intro.classList.add('done');
+      setTimeout(function () {
+        if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+      }, 1000);
+    }
+    body.classList.remove('locked');
+    body.classList.add('ready');
+  }
+
+  if (reduce) {
+    endIntro();
+  } else {
+    body.classList.add('locked');
+    setTimeout(function () { iw1.classList.add('show'); }, 140);
+    setTimeout(function () {
+      iw1.classList.remove('show');
+      iw1.classList.add('hide');
+    }, 900);
+    setTimeout(function () { iw2.classList.add('show'); }, 1140);
+    setTimeout(endIntro, 2150);
+  }
+
+  setTimeout(endIntro, 4200);
+
+  /* ---------- Nav scroll ---------- */
+  var lastY = -1;
+  function onScroll() {
+    var y = window.pageYOffset || document.documentElement.scrollTop;
+    if (y === lastY) return;
+    lastY = y;
+    if (y > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Mobile menu ---------- */
+  function closeMenu() {
+    burger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    body.classList.remove('locked');
+  }
+  function openMenu() {
+    burger.classList.add('open');
+    mobileNav.classList.add('open');
+    burger.setAttribute('aria-expanded', 'true');
+    body.classList.add('locked');
+  }
+
+  burger.addEventListener('click', function () {
+    if (mobileNav.classList.contains('open')) closeMenu();
+    else openMenu();
+  });
+
+  mobileNav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  /* ---------- Reveal ---------- */
+  var revealEls = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ---------- Nav spy ---------- */
+  var navAnchors = Array.prototype.slice.call(
+    document.querySelectorAll('#navLinks a')
+  );
+  var sections = navAnchors
+    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  if ('IntersectionObserver' in window && sections.length) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        navAnchors.forEach(function (a) {
+          a.classList.toggle(
+            'active',
+            a.getAttribute('href') === '#' + entry.target.id
+          );
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    sections.forEach(function (s) { spy.observe(s); });
+  }
+
+})();
+</script>
+
+</body>
+</html>
